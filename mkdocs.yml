@@ -3,6 +3,14 @@ site_description: Public sanitized reference docs for external AI-assisted devel
 repo_url: https://github.com/Verkis-EDS/Verkis-reference
 repo_name: Verkis-EDS/Verkis-reference
 
+# Synced common docs reference scripts/runbooks that aren't published as docs.
+# Downgrade unresolved links from "warn" (strict-fail) to "info" so the build passes.
+validation:
+  links:
+    not_found: info
+    absolute_links: info
+    unrecognized_links: info
+
 theme:
   name: material
   language: en

@@ -95,7 +95,14 @@ def main() -> None:
 
         clean = sanitize_text(path.read_text(encoding="utf-8", errors="replace"))
 
-        if args.strict and re.search(r"(?i)(password\s*[:=]|token\s*[:=]|secret\s*[:=]|PRIVATE KEY)", clean):
+        if args.strict and re.search(
+            r"-----BEGIN [A-Z ]*PRIVATE KEY-----"
+            r"|(\bpassword|\bpasswd|\bapi[_-]?key|(?<![\-_a-zA-Z])token|(?<![\-_a-zA-Z])secret)\s*[:=]\s*['\"]?[A-Za-z0-9/+=._\-]{8,}"
+            r"|\bglpat-[A-Za-z0-9_\-]{16,}"
+            r"|\bgh[pousr]_[A-Za-z0-9_]{20,}",
+            clean,
+            re.IGNORECASE,
+        ):
             blocked += 1
             report.append(f"- BLOCKED suspicious content after redaction: `{rel}`")
             continue

@@ -1,0 +1,44 @@
+# Verkís Proxmox Development Lab — MkDocs project template (v4.0 §18)
+# Copyright © Verkís internal documentation.
+
+site_name: <project-slug>
+site_description: <one-line project description>
+site_url: https://192.168.x.x:8443/<project-slug>/
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - toc.integrate
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: blue grey
+      accent: indigo
+
+nav:
+  - Home: index.md
+  - Setup: setup.md
+  - Architecture: architecture.md
+  - Operations: operations.md
+  - Troubleshooting: troubleshooting.md
+  - Decisions: decisions.md
+  - Changelog: changelog.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+
+extra:
+  generator: false
+  copyright: Copyright © Verkís internal documentation

@@ -35,9 +35,13 @@ if [ -d "$NAS_COMMON" ]; then
     REDTEAM_REVIEW.md \
     TEST_VERIFY_STANDARD.md \
     SESSION_CLOSEOUT.md \
+    CONTEXT_DISCIPLINE.md \
+    SETUP_STATUS_CHECK.md \
+    RUNBOOK_MASTER_v4.md \
     memory/MEMORY_POLICY.md \
     governance/ARTIFACT_CREATION_GATE.md \
     governance/MEMORY_CREATION_GATE.md \
+    governance/CONTEXT_CREATION_GATE.md \
     agents/AGENT_REGISTRY.md \
     skills/SKILL_REGISTRY.md
   do
