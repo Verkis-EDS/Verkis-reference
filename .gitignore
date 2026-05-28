@@ -1,0 +1,25 @@
+# Local sync staging and build output — never publish
+.mirror-work/
+
+# Python / MkDocs
+__pycache__/
+*.pyc
+.venv/
+venv/
+site/
+
+# Editor / OS junk
+.DS_Store
+*.swp
+*.swo
+
+# Never commit secret-bearing files
+.env
+.env.local
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+*.netrc

@@ -1,0 +1,40 @@
+site_name: Verkís Reference
+site_description: Public sanitized reference docs for external AI-assisted development
+repo_url: https://github.com/Verkis-EDS/Verkis-reference
+repo_name: Verkis-EDS/Verkis-reference
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - content.code.copy
+    - search.highlight
+
+nav:
+  - Home: index.md
+  - Start Here: start-here.md
+  - Operating Model: public-mirror-operating-model.md
+  - Prompts:
+      - Initial External Startup Prompt: prompts/initial-external-startup-prompt.md
+  - Standards:
+      - Planning Mode: standards/planning-mode.md
+      - Task Workflow: standards/task-workflow.md
+      - Context and Memory Policy: standards/context-memory-policy.md
+      - Public Safety Rules: standards/public-safety-rules.md
+      - Testing and Verification: standards/testing-verification.md
+      - Red-Team Review: standards/redteam-review.md
+  - Templates:
+      - New Project Start: project-templates/new-project-start-template.md
+  - Reference:
+      - Personality: reference/personality.md
+
+markdown_extensions:
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
