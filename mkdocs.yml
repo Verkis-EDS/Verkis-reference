@@ -38,6 +38,57 @@ nav:
       - New Project Start: project-templates/new-project-start-template.md
   - Reference:
       - Personality: reference/personality.md
+  - Common Operating Layer:
+      - Standards:
+          - Rules: reference/common/RULES.md
+          - Planning Mode: reference/common/PLANNING_MODE.md
+          - Agent Operating Standard: reference/common/AGENT_OPERATING_STANDARD.md
+          - Model Routing Policy: reference/common/MODEL_ROUTING_POLICY.md
+          - Context Discipline: reference/common/CONTEXT_DISCIPLINE.md
+          - Red-Team Review: reference/common/REDTEAM_REVIEW.md
+          - Test & Verify Standard: reference/common/TEST_VERIFY_STANDARD.md
+          - Session Closeout: reference/common/SESSION_CLOSEOUT.md
+          - Setup Status Check: reference/common/SETUP_STATUS_CHECK.md
+          - Master Runbook v4: reference/common/RUNBOOK_MASTER_v4.md
+      - Governance:
+          - Artifact Creation Gate: reference/common/governance/ARTIFACT_CREATION_GATE.md
+          - Memory Creation Gate: reference/common/governance/MEMORY_CREATION_GATE.md
+          - Context Creation Gate: reference/common/governance/CONTEXT_CREATION_GATE.md
+      - Memory:
+          - Memory Policy: reference/common/memory/MEMORY_POLICY.md
+      - Registries:
+          - Agent Registry: reference/common/agents/AGENT_REGISTRY.md
+          - Skill Registry: reference/common/skills/SKILL_REGISTRY.md
+      - Templates:
+          - Project:
+              - README: reference/common/templates/project/README.md
+              - Changelog: reference/common/templates/project/CHANGELOG.md
+              - Decisions: reference/common/templates/project/DECISIONS.md
+              - Improvements: reference/common/templates/project/IMPROVEMENTS.md
+              - Lessons Learned: reference/common/templates/project/LESSONS_LEARNED.md
+              - Open Points: reference/common/templates/project/OPEN_POINTS.md
+              - Project Memory: reference/common/templates/project/PROJECT_MEMORY.md
+              - Runbook: reference/common/templates/project/RUNBOOK.md
+              - Tool Registry: reference/common/templates/project/TOOL_REGISTRY.md
+          - Prompts:
+              - Opening Statement: reference/common/templates/prompts/01-opening-statement.md
+              - Master Startup: reference/common/templates/prompts/02-master-startup.md
+              - One-Command Session Start: reference/common/templates/prompts/03-one-command-session-start.md
+          - Runbooks:
+              - Backup & Restore: reference/common/templates/runbooks/backup-restore.md
+              - DNS Internal: reference/common/templates/runbooks/dns-internal.md
+              - LXC Create: reference/common/templates/runbooks/lxc-create.md
+              - VM Create: reference/common/templates/runbooks/vm-create.md
+              - Maintenance: reference/common/templates/runbooks/maintenance.md
+              - SSH Repair: reference/common/templates/runbooks/ssh-repair.md
+              - GitLab Runner: reference/common/templates/runbooks/gitlab-runner.md
+          - Session:
+              - Banner: reference/common/templates/session/banner.md
+              - Closeout: reference/common/templates/session/closeout-template.md
+              - Session Log: reference/common/templates/session/session-log-template.md
+          - Common Ops v3: reference/common/templates/verkis-proxmox-common-ops-v3.md
+          - Common Ops v2: reference/common/templates/verkis-proxmox-common-ops-v2.md
+          - Claude Code Terminal Startup: reference/common/templates/verkis-claude-code-terminal-startup-runbook.md
 
 markdown_extensions:
   - admonition
