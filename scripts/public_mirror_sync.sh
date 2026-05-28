@@ -39,6 +39,7 @@ if [ -d "$NAS_COMMON" ]; then
     SETUP_STATUS_CHECK.md \
     RUNBOOK_MASTER_v4.md \
     memory/MEMORY_POLICY.md \
+    governance/WORKSPACE_GATEKEEPER.md \
     governance/ARTIFACT_CREATION_GATE.md \
     governance/MEMORY_CREATION_GATE.md \
     governance/CONTEXT_CREATION_GATE.md \

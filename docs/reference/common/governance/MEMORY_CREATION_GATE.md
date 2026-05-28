@@ -2,6 +2,8 @@
 
 > Copyright © Verkís internal documentation.
 
+See also: [`WORKSPACE_GATEKEEPER.md`](WORKSPACE_GATEKEEPER.md) — entry point and end-to-end flow.
+
 Use this before adding any entry to `GLOBAL_MEMORY.md`, a project's `PROJECT_MEMORY.md`, or `LESSONS_LEARNED.md`.
 
 ## Pre-flight checklist

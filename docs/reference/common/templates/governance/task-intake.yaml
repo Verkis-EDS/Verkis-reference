@@ -1,0 +1,104 @@
+# Task Intake (canonical YAML)
+# Source: _common/TASK_INGESTION_PROTOCOL.md §15.1
+# Copy this file to the project (or save under governance/requests/) and fill in.
+# Every field must be filled; write "none" rather than leaving blank.
+
+task:
+  id: "VSYS-0000"          # Use naming standard from §14.1
+  title: ""
+  type: "TASK"             # TASK | BUG | INCIDENT | CHANGE_REQUEST | DOC_UPDATE | INFO | DECISION | RISK | IDEA | AGENT_REQUEST | LESSON | RESEARCH
+  priority: "P2"           # P0 | P1 | P2 | P3 | P4
+  status: "NEW"            # NEW | TRIAGED | CLARIFY | READY | ASSIGNED | IN_PROGRESS | BLOCKED | REVIEW | REWORK | VERIFY | DONE | REJECTED | CLOSED
+  requested_by: ""
+  source: ""               # User | GitLab | Teams | Incident | System | …
+  created: "YYYY-MM-DD"
+
+objective: ""              # Outcome, not activity
+
+background: ""             # Why this matters
+
+system_context:
+  project: ""
+  environment: "dev"       # dev | test | prod | docs
+  affected_assets:
+    - ""
+  current_state_checked: false   # Set true only after observation
+
+scope:
+  included:
+    - ""
+  excluded:
+    - ""
+
+requirements:
+  functional:
+    - id: "FR-001"
+      statement: ""        # "The system shall … so that …"
+      verification: ""
+  non_functional:
+    - id: "NFR-001"
+      statement: ""
+      verification: ""
+  constraints:
+    - id: "C-001"
+      statement: ""
+
+assumptions:
+  - id: "A-001"
+    statement: ""
+
+dependencies:
+  - ""
+
+risks:
+  safety:
+    - ""
+  security:
+    - ""
+  operational:
+    - ""
+  bloat:
+    - ""
+
+wbs:
+  deliverables:
+    - id: "D1"
+      name: ""
+      work_packages:
+        - id: "WP1.1"
+          name: ""
+          tasks:
+            - ""
+
+acceptance_criteria:
+  - ""                     # Specific, measurable, testable, binary
+
+verification_plan:
+  - requirement: "FR-001"
+    method: ""
+    evidence: ""
+
+documentation:
+  mkdocs_update: false
+  nas_update: false
+  adr_required: false
+  target_paths:
+    - ""
+
+memory:
+  decision: "SESSION_ONLY" # SAVE_COMMON | SAVE_PROJECT | SAVE_DOCS | SESSION_ONLY | DO_NOT_SAVE | ARCHIVE
+  reason: ""
+
+rollback:
+  required: false
+  plan: ""
+
+closure:
+  result: ""               # DONE | PARTIAL | BLOCKED | REJECTED
+  verification_result: ""
+  evidence:
+    - ""
+  lessons:
+    - ""
+  follow_up:
+    - ""

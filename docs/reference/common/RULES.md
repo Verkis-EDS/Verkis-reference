@@ -15,7 +15,7 @@ This file is the single load-bearing operating standard for the lab. Every sessi
 | GitLab | `https://192.168.x.x` |
 | Docs portal | `https://192.168.x.x:8443` |
 | Proxmox GUI | `https://192.168.x.x:8006` |
-| NAS SMB share | `//192.168.x.x/share` |
+| NAS SMB share | `\\192.168.x.x\share` |
 | Public mirror (sanitized) | `https://github.com/Verkis-EDS/Verkis-reference` |
 
 Legacy aliases (do not propagate): `/mnt/verkis-nas`, `Verkis-Lab`. If they appear in docs, point them at the canonical path; do not maintain parallel trees.
@@ -30,7 +30,8 @@ Every non-trivial session starts by:
 
 1. Running `~/bin/verkis-common banner` (or equivalent) — see [PLANNING_MODE.md](PLANNING_MODE.md) and [SETUP_STATUS_CHECK.md](SETUP_STATUS_CHECK.md). If NAS is unreachable, the dispatcher prints the public-mirror fallback URL.
 2. Reading **this file**, then [PLANNING_MODE.md](PLANNING_MODE.md), then [CONTEXT_DISCIPLINE.md](CONTEXT_DISCIPLINE.md), then the active project's `PROJECT_MEMORY.md` if any.
-3. Stating objective, assumptions, current known infrastructure, missing information, proposed first actions, risk level, approval points, acceptance criteria, verification method, rollback approach — before any write action.
+3. **Checking and mapping the current workspace and relevant data** — CWD, the active project repo and its `CLAUDE.md`, current auto-memory, the latest `audits/` and `inventory/`, and live infrastructure state (`qm list` / `pct list`, storage, network) — observed, never recalled. This is the "current-state" leg of the loop; see [SETUP_STATUS_CHECK.md](SETUP_STATUS_CHECK.md) and "Current-state first" below.
+4. Stating objective, assumptions, current known infrastructure, missing information, proposed first actions, risk level, approval points, acceptance criteria, verification method, rollback approach — before any write action.
 
 ## Mandatory session closing
 
@@ -49,6 +50,7 @@ Every non-trivial session ends by:
 - **No plaintext secrets.** Never in Git, Markdown, logs, screenshots, NAS plaintext, or chat. Use `.env.local` (gitignored) or GitLab CI variables only.
 - **Trust observed reality over recalled memory.** Memory may be stale — verify before recommending.
 - **Reuse over create.** Do not create a new agent, skill, script, or memory entry unless the [Artifact Creation Gate](governance/ARTIFACT_CREATION_GATE.md) passes.
+- **Build reusable tooling deliberately.** When a check, fix, or audit is performed more than twice — or any time a recurring reliability or performance gap is identified — convert it into a script or `verkis-common` subcommand rather than repeating ad-hoc commands. New tooling must pass the [Artifact Creation Gate](governance/ARTIFACT_CREATION_GATE.md) and extend the existing dispatcher (`~/bin/verkis-common`) or the project-local `scripts/` directory; do not create parallel CLIs, wrappers, or shadow copies. Host-touching scripts live under `/root/proxmox-manager/scripts/` and stay read-only by default; cross-project standards and dispatcher subcommands live under `/mnt/nas/Verkis-Proxmox-Dev/_common/scripts/`. Every new script must carry a header documenting (a) the recurring need it serves, (b) why an existing tool could not be extended, and (c) whether it is read-only or requires approval gates. Retire or fold scripts back into the dispatcher when their need disappears — proliferation is the failure mode this rule prevents.
 - **Reversible default.** Prefer changes that can be undone with one command. Document the rollback alongside the change.
 
 ## Branding
@@ -63,6 +65,7 @@ Inherit the existing theme. Do not introduce alternative branding.
 ## Where to find things
 
 - **Master runbook (v4.0):** [`RUNBOOK_MASTER_v4.md`](RUNBOOK_MASTER_v4.md) — full canonical source
+- **Task ingestion protocol:** [`TASK_INGESTION_PROTOCOL.md`](TASK_INGESTION_PROTOCOL.md) — read before any non-trivial task intake
 - **Memory policy:** [`memory/MEMORY_POLICY.md`](memory/MEMORY_POLICY.md)
 - **Context discipline:** [`CONTEXT_DISCIPLINE.md`](CONTEXT_DISCIPLINE.md)
 - **Gates:** [`governance/ARTIFACT_CREATION_GATE.md`](governance/ARTIFACT_CREATION_GATE.md) · [`governance/MEMORY_CREATION_GATE.md`](governance/MEMORY_CREATION_GATE.md)

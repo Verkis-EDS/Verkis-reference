@@ -2,6 +2,8 @@
 
 > Copyright © Verkís internal documentation.
 
+See also: [`WORKSPACE_GATEKEEPER.md`](WORKSPACE_GATEKEEPER.md) — entry point and end-to-end flow.
+
 Use this before escalating the session's **context level** above the default L1/L2. Implements the escalation discipline introduced in [`../CONTEXT_DISCIPLINE.md`](../CONTEXT_DISCIPLINE.md) "Context loading levels".
 
 ## Why a gate

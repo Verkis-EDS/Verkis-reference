@@ -24,6 +24,7 @@ theme:
 nav:
   - Home: index.md
   - Start Here: start-here.md
+  - Status: status.md
   - Operating Model: public-mirror-operating-model.md
   - Prompts:
       - Initial External Startup Prompt: prompts/initial-external-startup-prompt.md
@@ -34,6 +35,7 @@ nav:
       - Public Safety Rules: standards/public-safety-rules.md
       - Testing and Verification: standards/testing-verification.md
       - Red-Team Review: standards/redteam-review.md
+      - Workspace Gatekeeper: standards/workspace-gatekeeper.md
   - Templates:
       - New Project Start: project-templates/new-project-start-template.md
   - Reference:
@@ -51,6 +53,7 @@ nav:
           - Setup Status Check: reference/common/SETUP_STATUS_CHECK.md
           - Master Runbook v4: reference/common/RUNBOOK_MASTER_v4.md
       - Governance:
+          - Workspace Gatekeeper: reference/common/governance/WORKSPACE_GATEKEEPER.md
           - Artifact Creation Gate: reference/common/governance/ARTIFACT_CREATION_GATE.md
           - Memory Creation Gate: reference/common/governance/MEMORY_CREATION_GATE.md
           - Context Creation Gate: reference/common/governance/CONTEXT_CREATION_GATE.md

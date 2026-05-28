@@ -2,6 +2,8 @@
 
 > Copyright © Verkís internal documentation.
 
+See also: [`governance/WORKSPACE_GATEKEEPER.md`](governance/WORKSPACE_GATEKEEPER.md) — entry point and end-to-end flow.
+
 Mandatory before any destructive action, shared-state change, or session closeout that touched infrastructure. Implements `RUNBOOK_MASTER_v4.md` §23. The goal is to surface the failure mode *before* it lands.
 
 ## When to run

@@ -2,6 +2,8 @@
 
 > Copyright © Verkís internal documentation.
 
+See also: [`WORKSPACE_GATEKEEPER.md`](WORKSPACE_GATEKEEPER.md) — entry point and end-to-end flow.
+
 Use this before creating any new **agent, skill, script, repeated workflow, or template**. Default stance: *do not create unless the gate passes.*
 
 ## Why
