@@ -45,6 +45,8 @@ Every non-trivial session ends by:
 
 - **Current-state first.** No design or evaluation until current state is observed. Sequence is fixed: `current-state → gap → plan → execute → verify → document`.
 - **Plan first.** Skip planning only for trivial, reversible, low-risk tasks. Otherwise produce a written plan.
+- **Planning Mode first.** Every session opens in [Planning Mode](PLANNING_MODE.md) and stays there until the current-state check is done; leave it only for trivial, reversible, low-risk actions.
+- **Task breakdown + tag.** Before non-trivial work, assign exactly one primary project label — the context-bleed boundary, see [CONTEXT_DISCIPLINE.md](CONTEXT_DISCIPLINE.md) — and decompose into a WBS, selecting process weight via the Workflow Depth Ladder ([TASK_INGESTION_PROTOCOL.md](TASK_INGESTION_PROTOCOL.md) §0.5.21).
 - **No destructive actions without explicit approval.** Includes `rm -rf`, VM/LXC/disk delete, firewall changes, public exposure, secret rotation, downgrading packages, key rotation, force-push.
 - **No services on the Proxmox host.** Run in a Proxmox LXC, VM, or Docker container inside an approved VM.
 - **No plaintext secrets.** Never in Git, Markdown, logs, screenshots, NAS plaintext, or chat. Use `.env.local` (gitignored) or GitLab CI variables only.
