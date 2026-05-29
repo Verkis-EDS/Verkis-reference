@@ -37,6 +37,27 @@ Default starting point: **Level 1 or 2**. Escalate only when the work actually n
 | Resource summaries | `_common/resources/executive_summaries/` | Verified third-party doc summaries | Full document dumps |
 | Archive | `<area>/archive/` | Historical reference | Active instructions |
 
+## Project / topic label taxonomy
+
+Every input gets **one primary label** before work begins (secondary labels only when
+explicitly needed). A label is a **boundary, not a tag** — contexts do not mix unless
+asked. This extends project-bleed control (drift controls 3 / 5 / 8, below) from lab
+projects to cross-domain life/work contexts.
+
+Generic categories such as `AI-System`, `Programming`, `Project Management`, and
+`Personal` are kept strictly separate from any named project, and a named project's
+internal or client detail never leaks into generic or public output. The concrete
+cross-domain label set and per-label presets are maintained in
+[`TASK_INGESTION_PROTOCOL.md`](TASK_INGESTION_PROTOCOL.md) §0.5.21 (canonical, **not
+mirrored publicly**), alongside the depth ladder that sets each labelled task's workflow
+mode. When the active label is unclear, ask (drift control 10).
+
+- **Adds:** the one-primary-label boundary rule as a context-discipline control.
+- **Does not add:** new memory or context policy, and **no private project/client names**
+  (those stay in the non-mirrored protocol) — it names the boundary that drift controls
+  3/5/8 and the [`REDTEAM_REVIEW.md`](REDTEAM_REVIEW.md) project-bleed question already
+  enforce.
+
 ## The 10 drift controls
 
 1. Start each session with [SETUP_STATUS_CHECK.md](SETUP_STATUS_CHECK.md).
