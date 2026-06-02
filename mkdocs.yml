@@ -37,6 +37,8 @@ nav:
       - Testing and Verification: standards/testing-verification.md
       - Red-Team Review: standards/redteam-review.md
       - Workspace Gatekeeper: standards/workspace-gatekeeper.md
+      - Front-End & HMI Design Workflow: standards/design-workflow.md
+      - Dashboard & HMI Data Pack: standards/dashboard-hmi-data-pack.md
   - Templates:
       - New Project Start: project-templates/new-project-start-template.md
   - Reference:
