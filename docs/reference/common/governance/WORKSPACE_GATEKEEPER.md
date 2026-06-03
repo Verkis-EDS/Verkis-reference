@@ -49,6 +49,8 @@ Most of the original Gatekeeper proposal is already implemented elsewhere in
 | Master runbook + session model | [`../RUNBOOK_MASTER_v4.md`](../RUNBOOK_MASTER_v4.md), [`../SESSION_CLOSEOUT.md`](../SESSION_CLOSEOUT.md) |
 | Verification standard | [`../TEST_VERIFY_STANDARD.md`](../TEST_VERIFY_STANDARD.md) |
 | Model routing for review | [`../MODEL_ROUTING_POLICY.md`](../MODEL_ROUTING_POLICY.md) |
+| Front-end & HMI design workflow (Ignition-first) | [`../DESIGN_WORKFLOW_STANDARD.md`](../DESIGN_WORKFLOW_STANDARD.md) |
+| Dashboard/HMI catalogs + quality scorecard | [`../DASHBOARD_HMI_DATA_PACK.md`](../DASHBOARD_HMI_DATA_PACK.md) |
 
 If you came here from the original 29-section "Workspace Gatekeeper" prompt,
 the section→file mapping is:

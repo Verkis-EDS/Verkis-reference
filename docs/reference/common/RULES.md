@@ -71,6 +71,7 @@ Inherit the existing theme. Do not introduce alternative branding.
 - **Memory policy:** [`memory/MEMORY_POLICY.md`](memory/MEMORY_POLICY.md)
 - **Context discipline:** [`CONTEXT_DISCIPLINE.md`](CONTEXT_DISCIPLINE.md)
 - **Gates:** [`governance/ARTIFACT_CREATION_GATE.md`](governance/ARTIFACT_CREATION_GATE.md) · [`governance/MEMORY_CREATION_GATE.md`](governance/MEMORY_CREATION_GATE.md)
+- **Design standards:** [`DESIGN_WORKFLOW_STANDARD.md`](DESIGN_WORKFLOW_STANDARD.md) (front-end & HMI design workflow, Ignition-first) · [`DASHBOARD_HMI_DATA_PACK.md`](DASHBOARD_HMI_DATA_PACK.md) (platform/component/data catalogs + scorecard)
 - **Audit script:** [`scripts/proxmox_readonly_audit.sh`](scripts/proxmox_readonly_audit.sh)
 - **Banner:** [`scripts/context_banner.sh`](scripts/context_banner.sh)
 - **Cleanup dry-run:** [`scripts/cleanup_dryrun.sh`](scripts/cleanup_dryrun.sh)
