@@ -86,4 +86,4 @@ If any block reports a failure (NAS not mounted, Git remote unreachable, MkDocs 
 
 - Master runbook: [`RUNBOOK_MASTER_v4.md`](RUNBOOK_MASTER_v4.md) §1, §5
 - Closeout counterpart: [`SESSION_CLOSEOUT.md`](SESSION_CLOSEOUT.md)
-- Drift controls: [`memory/CONTEXT_DRIFT_CONTROL.md`](memory/CONTEXT_DRIFT_CONTROL.md) rules 1–3
+- Drift controls: `memory/CONTEXT_DRIFT_CONTROL.md` (internal reference; omitted from this mirror) rules 1–3

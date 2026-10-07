@@ -8,16 +8,25 @@ FAIL=0
 echo
 echo "1) Git status"
 git status --short || FAIL=1
+SYMLINKS="$(find . -type l -not -path './.git/*' -not -path './.venv/*' -not -path './site/*' -not -path './.mirror-work/*' -print)" || FAIL=1
+if [ -n "$SYMLINKS" ]; then
+  echo 'ERROR: publication source must not contain symlinks:'
+  echo "$SYMLINKS"
+  FAIL=1
+fi
 
 echo
 echo "2) Blocked filenames"
 BLOCKED_FILES="$(find . \
-  \( -iname "*.env" -o -iname "*.pem" -o -iname "*.key" -o -iname "*.p12" -o -iname "*.pfx" \
-     -o -iname "id_rsa*" -o -iname "id_ed25519*" -o -iname "*secret*" -o -iname "*token*" -o -iname "*credential*" \) \
+  \( -iname "*.env" -o -iname '.env.*' -o -iname "*.pem" -o -iname "*.key" -o -iname "*.p12" -o -iname "*.pfx" \
+     -o -iname "id_rsa*" -o -iname "id_ed25519*" -o -iname "*secret*" -o -iname "*token*" -o -iname "*credential*" -o -iname '*password*' -o -iname '*wg*.conf' -o -iname '*wireguard*' \) \
   -not -path "./.git/*" \
+  -not -path "./.mirror-work/*" \
+  -not -path "./.venv/*" \
+  -not -path "./site/*" \
   -not -path "./examples/env.example" \
   -not -path "./examples/public-mirror-config.example.env" \
-  -print || true)"
+  -print)" || FAIL=1
 
 if [ -n "$BLOCKED_FILES" ]; then
   echo "ERROR: blocked filenames found:"
@@ -32,16 +41,19 @@ echo "3) Likely secret content"
 # - PEM private-key markers (the actual file format)
 # - `password=value` / `token=value` etc. with an inline non-empty value (not policy prose)
 # - GitLab/GitHub token prefixes
-SECRET_HITS="$(grep -RniE \
-  "-----BEGIN [A-Z ]*PRIVATE KEY-----|(\\bpassword|\\bpasswd|\\bapi[_-]?key|(^|[^-_a-z])token|(^|[^-_a-z])secret)[[:space:]]*[:=][[:space:]]*['\"]?[A-Za-z0-9/+=._\\-]{8,}|\\bglpat-[A-Za-z0-9_\\-]{16,}|\\bgh[pousr]_[A-Za-z0-9_]{20,}" \
+SCAN_STATUS=0
+SECRET_HITS="$(grep -RlIE \
+  -e "-----BEGIN [A-Z ]*PRIVATE KEY-----|(\\bpassword|\\bpasswd|\\bapi[_-]?key|(^|[^-_a-z])token|(^|[^-_a-z])secret)[[:space:]]*[:=][[:space:]]*['\"]?[A-Za-z0-9/+=._\\-]{8,}|\\bglpat-[A-Za-z0-9_\\-]{16,}|\\bgh[pousr]_[A-Za-z0-9_]{20,}" \
   . \
   --exclude-dir=.git \
   --exclude-dir=.mirror-work \
+  --exclude-dir=.venv \
+  --exclude-dir=__pycache__ \
   --exclude-dir=site \
   --exclude="verify_public_repo.sh" \
-  --exclude="sanitize_public_mirror.py" \
-  --exclude="*.example" || true)"
+  --exclude="sanitize_public_mirror.py" )" || SCAN_STATUS=$?
 
+if [ "$SCAN_STATUS" -gt 1 ]; then echo "Secret scan failed" >&2; FAIL=1; fi
 if [ -n "$SECRET_HITS" ]; then
   echo "ERROR: possible secret content found:"
   echo "$SECRET_HITS"
@@ -52,13 +64,19 @@ fi
 
 echo
 echo "4) Private IPv4 references outside examples"
-IP_HITS="$(grep -RniE \
-  "\b(10|192\.168|172\.(1[6-9]|2[0-9]|3[0-1]))\.[0-9]{1,3}\.[0-9]{1,3}" \
+SCAN_STATUS=0
+IP_HITS="$(grep -RlIE \
+  -e "\b(10(\.[0-9]{1,3}){3}|192\.168(\.[0-9]{1,3}){2}|172\.(1[6-9]|2[0-9]|3[0-1])(\.[0-9]{1,3}){2})\b" \
   . \
   --exclude-dir=.git \
   --exclude-dir=.mirror-work \
-  --exclude="*.example" || true)"
+  --exclude-dir=.venv \
+  --exclude-dir=__pycache__ \
+  --exclude-dir=site \
+  --exclude="*.example.env" \
+  --exclude="*.example" )" || SCAN_STATUS=$?
 
+if [ "$SCAN_STATUS" -gt 1 ]; then echo "IP scan failed" >&2; FAIL=1; fi
 if [ -n "$IP_HITS" ]; then
   echo "ERROR/WARN: private IP references found:"
   echo "$IP_HITS"
@@ -68,11 +86,12 @@ else
 fi
 
 echo
-echo "5) gitleaks if available"
+echo "5) Required gitleaks scan"
 if command -v gitleaks >/dev/null 2>&1; then
   gitleaks detect --source . --no-git --redact || FAIL=1
 else
-  echo "WARN: gitleaks not installed"
+  echo "ERROR: gitleaks is required for publication verification"
+  FAIL=1
 fi
 
 echo

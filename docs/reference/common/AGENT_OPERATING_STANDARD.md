@@ -43,7 +43,7 @@ A failed gate is a stop, not a hint. Do not "lightly modify" the artifact to mak
 
 ## Model routing
 
-Default `opusplan`. Full table and rules in [MODEL_ROUTING_POLICY.md](MODEL_ROUTING_POLICY.md). Cost is informational, never a reason to downgrade for planning, security, infrastructure, or final review.
+Use the current runtime-specific routes in [MODEL_ROUTING_POLICY.md](MODEL_ROUTING_POLICY.md). Cost is informational, never a reason to downgrade for planning, security, infrastructure, or final review.
 
 ## Verification and closeout
 
@@ -63,3 +63,7 @@ Every session ends with [TEST_VERIFY_STANDARD.md](TEST_VERIFY_STANDARD.md) check
 - "I'll remember this for next time" — write it via the [Memory Creation Gate](governance/MEMORY_CREATION_GATE.md) or it does not exist.
 
 See also: [`RUNBOOK_MASTER_v4.md`](RUNBOOK_MASTER_v4.md).
+
+## Session delegation versus durable artifacts
+
+A temporary worker assigned within an authorized session does not create a persistent registered agent. Give it a bounded task and keep decisions with the coordinator. Creating or changing reusable agent definitions still requires the artifact gate and the [canonical registry](governance/registries/agents.md).

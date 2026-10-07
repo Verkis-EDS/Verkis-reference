@@ -3,7 +3,7 @@
 > Copyright © Verkís internal documentation.
 
 Before a Figma frame is implemented (web or Perspective). See
-[`../../DESIGN_WORKFLOW_STANDARD.md`](../../DESIGN_WORKFLOW_STANDARD.md).
+`../../DESIGN_WORKFLOW_STANDARD.md` (internal reference; omitted from this mirror).
 
 - [ ] Tokens/variables used for colour, spacing, typography (no ad-hoc values).
 - [ ] Components built before pages; variants cover default / hover / disabled / loading / error.

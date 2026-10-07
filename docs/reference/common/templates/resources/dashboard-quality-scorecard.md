@@ -2,7 +2,7 @@
 
 > Copyright © Verkís internal documentation.
 
-Template for scoring a dashboard or HMI. Canonical rubric: [`../../DASHBOARD_HMI_DATA_PACK.md`](../../DASHBOARD_HMI_DATA_PACK.md).
+Template for scoring a dashboard or HMI. Canonical rubric: `../../DASHBOARD_HMI_DATA_PACK.md` (internal reference; omitted from this mirror).
 Score each 1–5. Model any scoring engine on `scripts/session_quality.py` — do not build a parallel one.
 
 - **Asset:** &lt;id / name&gt;  · **Platform:** &lt;ignition-perspective / nextjs / …&gt;  · **Reviewer:** &lt;name&gt; · **Date:** &lt;YYYY-MM-DD&gt;

@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PERSONALITY_FILE="${PERSONALITY_FILE:-PERSONALITY.md}"
+PERSONALITY_FILE="PERSONALITY.md"
+git ls-files --error-unmatch "$PERSONALITY_FILE" >/dev/null
+for path in PERSONALITY.md docs docs/reference docs/reference/personality.md CLAUDE.md CODEX.md; do
+  [ ! -L "$path" ] || { echo "Refusing symlink: $path" >&2; exit 2; }
+done
 
 if [ ! -f "$PERSONALITY_FILE" ]; then
   echo "ERROR: $PERSONALITY_FILE missing."

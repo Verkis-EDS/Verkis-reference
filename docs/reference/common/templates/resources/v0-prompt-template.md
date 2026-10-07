@@ -4,7 +4,7 @@
 
 For generating a front-end *prototype* with v0 (Vercel). The prototype is exploration only — Figma is the
 design authority and a human review + the gates own promotion to production (see
-[`../../DESIGN_WORKFLOW_STANDARD.md`](../../DESIGN_WORKFLOW_STANDARD.md)). For an HMI deliverable, treat the
+`../../DESIGN_WORKFLOW_STANDARD.md` (internal reference; omitted from this mirror)). For an HMI deliverable, treat the
 v0 output as a reference to translate into an Ignition Perspective view, not as the shipped artifact.
 
 ```md

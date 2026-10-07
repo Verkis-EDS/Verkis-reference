@@ -70,7 +70,7 @@ Minimum (read-only baseline always available):
 - For VM/LXC changes: `qm config <id>` or `pct config <id>` before and after, diffed.
 - For storage changes: `pvesm status` before and after.
 - For network changes: `ip -br addr` and `ip -br link` before and after.
-- See [`scripts/proxmox_readonly_audit.sh`](scripts/proxmox_readonly_audit.sh).
+- See `scripts/proxmox_readonly_audit.sh` (internal reference; omitted from this mirror).
 
 ### Security-sensitive changes
 

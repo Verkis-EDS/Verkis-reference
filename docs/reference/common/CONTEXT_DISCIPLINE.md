@@ -48,7 +48,7 @@ Generic categories such as `AI-System`, `Programming`, `Project Management`, and
 `Personal` are kept strictly separate from any named project, and a named project's
 internal or client detail never leaks into generic or public output. The concrete
 cross-domain label set and per-label presets are maintained in
-[`TASK_INGESTION_PROTOCOL.md`](TASK_INGESTION_PROTOCOL.md) §0.5.21 (canonical, **not
+`TASK_INGESTION_PROTOCOL.md` (internal reference; omitted from this mirror) §0.5.21 (canonical, **not
 mirrored publicly**), alongside the depth ladder that sets each labelled task's workflow
 mode. When the active label is unclear, ask (drift control 10).
 

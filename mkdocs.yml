@@ -3,11 +3,10 @@ site_description: Public sanitized reference docs for external AI-assisted devel
 repo_url: https://github.com/Verkis-EDS/Verkis-reference
 repo_name: Verkis-EDS/Verkis-reference
 
-# Synced common docs reference scripts/runbooks that aren't published as docs.
-# Downgrade unresolved links from "warn" (strict-fail) to "info" so the build passes.
+# The exporter labels omitted internal references as prose. Broken public links fail CI.
 validation:
   links:
-    not_found: info
+    not_found: warn
     absolute_links: info
     unrecognized_links: info
 
@@ -63,8 +62,8 @@ nav:
       - Memory:
           - Memory Policy: reference/common/memory/MEMORY_POLICY.md
       - Registries:
-          - Agent Registry: reference/common/agents/AGENT_REGISTRY.md
-          - Skill Registry: reference/common/skills/SKILL_REGISTRY.md
+          - Agent Registry: reference/common/governance/registries/agents.md
+          - Skill Registry: reference/common/governance/registries/skills.md
       - Templates:
           - Project:
               - README: reference/common/templates/project/README.md

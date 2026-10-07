@@ -34,7 +34,7 @@ Escalate to **L4** only when **all** of:
 
 - The task is an audit, migration, cleanup, or architecture review (the four named L4 use cases).
 - A written plan exists (see [`../PLANNING_MODE.md`](../PLANNING_MODE.md)).
-- The session is on Opus or `opusplan` per [`../MODEL_ROUTING_POLICY.md`](../MODEL_ROUTING_POLICY.md).
+- The session is on the strongest appropriate model available in the active runtime per [`../MODEL_ROUTING_POLICY.md`](../MODEL_ROUTING_POLICY.md).
 - The user has approved the escalation, or the runbook step being executed explicitly calls for L4.
 
 ## Pre-flight checklist
@@ -43,7 +43,7 @@ Escalate to **L4** only when **all** of:
 [ ] Current level is L1 or L2.
 [ ] The task genuinely needs the extra context (named files, not "everything").
 [ ] No project-bleed risk — the additional files belong to the active project or are global.
-[ ] Model route is appropriate for the higher level (Opus/opusplan for L3+).
+[ ] Model route is appropriate for the higher level (strong review for L3+).
 [ ] The escalation is recorded in the session log with reason.
 [ ] A downgrade plan exists — when this sub-task ends, drop back to L1/L2.
 ```
@@ -77,4 +77,4 @@ When the L3/L4 sub-task ends, **drop back to L1/L2 explicitly**. State the downg
 - "We were at L4 earlier, let's stay there." — every sub-task re-evaluates the level.
 - Escalating to avoid the inconvenience of looking something up. Look it up.
 
-See also: [`../CONTEXT_DISCIPLINE.md`](../CONTEXT_DISCIPLINE.md), [`../memory/CONTEXT_DRIFT_CONTROL.md`](../memory/CONTEXT_DRIFT_CONTROL.md), [`ARTIFACT_CREATION_GATE.md`](ARTIFACT_CREATION_GATE.md), [`MEMORY_CREATION_GATE.md`](MEMORY_CREATION_GATE.md).
+See also: [`../CONTEXT_DISCIPLINE.md`](../CONTEXT_DISCIPLINE.md), `../memory/CONTEXT_DRIFT_CONTROL.md` (internal reference; omitted from this mirror), [`ARTIFACT_CREATION_GATE.md`](ARTIFACT_CREATION_GATE.md), [`MEMORY_CREATION_GATE.md`](MEMORY_CREATION_GATE.md).

@@ -5,7 +5,7 @@
 A starting structure for a Verkís Perspective operator screen (the lab's primary HMI target). Build mechanics
 (headless `view.json`, `onStartup` tag bootstrap, `onClick` control, symbols, auto-scale) are in
 `lab-manuals/docs/ignition/{project-development,perspective-ui-design-guide,mvp-demo-project}.md`. Design
-rules: [`../../DESIGN_WORKFLOW_STANDARD.md`](../../DESIGN_WORKFLOW_STANDARD.md) §SCADA.
+rules: `../../DESIGN_WORKFLOW_STANDARD.md` (internal reference; omitted from this mirror) §SCADA.
 
 ## Screen contract
 - **Area / route:** `views/<area>/<name>` → page `/＜route＞`  · **User:** operator / engineer

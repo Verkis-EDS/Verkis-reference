@@ -49,8 +49,8 @@ Most of the original Gatekeeper proposal is already implemented elsewhere in
 | Master runbook + session model | [`../RUNBOOK_MASTER_v4.md`](../RUNBOOK_MASTER_v4.md), [`../SESSION_CLOSEOUT.md`](../SESSION_CLOSEOUT.md) |
 | Verification standard | [`../TEST_VERIFY_STANDARD.md`](../TEST_VERIFY_STANDARD.md) |
 | Model routing for review | [`../MODEL_ROUTING_POLICY.md`](../MODEL_ROUTING_POLICY.md) |
-| Front-end & HMI design workflow (Ignition-first) | [`../DESIGN_WORKFLOW_STANDARD.md`](../DESIGN_WORKFLOW_STANDARD.md) |
-| Dashboard/HMI catalogs + quality scorecard | [`../DASHBOARD_HMI_DATA_PACK.md`](../DASHBOARD_HMI_DATA_PACK.md) |
+| Front-end & HMI design workflow (Ignition-first) | `../DESIGN_WORKFLOW_STANDARD.md` (internal reference; omitted from this mirror) |
+| Dashboard/HMI catalogs + quality scorecard | `../DASHBOARD_HMI_DATA_PACK.md` (internal reference; omitted from this mirror) |
 
 If you came here from the original 29-section "Workspace Gatekeeper" prompt,
 the section→file mapping is:
@@ -102,21 +102,21 @@ Three steps. Use the existing wrapper — do not invent a parallel flow.
 ## Registries
 
 Tracking tables for everything that survives a Gatekeeper review. One file
-per type. See [`registries/README.md`](registries/README.md) for the column
+per type. See `registries/README.md` (internal reference; omitted from this mirror) for the column
 schema and rules.
 
-- [`registries/workspace.md`](registries/workspace.md) — top-level rollup
+- `registries/workspace.md` (internal reference; omitted from this mirror) — top-level rollup
 - [`registries/agents.md`](registries/agents.md)
-- [`registries/tools.md`](registries/tools.md)
+- `registries/tools.md` (internal reference; omitted from this mirror)
 - [`registries/skills.md`](registries/skills.md)
-- [`registries/scripts.md`](registries/scripts.md)
-- [`registries/workflows.md`](registries/workflows.md)
-- [`registries/memory.md`](registries/memory.md)
+- `registries/scripts.md` (internal reference; omitted from this mirror)
+- `registries/workflows.md` (internal reference; omitted from this mirror)
+- `registries/memory.md` (internal reference; omitted from this mirror)
 
 ## AI-assistant Gatekeeper prompt
 
 When you want an LLM session to act as the Gatekeeper reviewer:
-[`prompts/workspace-gatekeeper-agent.md`](prompts/workspace-gatekeeper-agent.md).
+`prompts/workspace-gatekeeper-agent.md` (internal reference; omitted from this mirror).
 
 The prompt is intentionally short: it loads context by reading `RULES.md`,
 `REDTEAM_REVIEW.md`, and the relevant `*_CREATION_GATE.md` rather than
@@ -126,7 +126,7 @@ drift apart.
 ## Hygiene review
 
 Run monthly, or after large changes. Template + log live under
-[`hygiene/`](hygiene/). The existing `verkis-common stale-review` does the
+`hygiene/` (internal reference; omitted from this mirror). The existing `verkis-common stale-review` does the
 mechanical part (entries past their review date); the template captures the
 keep / simplify / merge / archive / delete judgement.
 
@@ -134,7 +134,7 @@ keep / simplify / merge / archive / delete judgement.
 
 The folder layout, NAS paths, MkDocs nav, and Git remotes the original
 proposal describes are **already in place**. See
-[`SETUP_CHECKLIST.md`](SETUP_CHECKLIST.md) for the reality-matched checklist
+`SETUP_CHECKLIST.md` (internal reference; omitted from this mirror) for the reality-matched checklist
 and any remaining gaps.
 
 ## Out of scope (deferred)

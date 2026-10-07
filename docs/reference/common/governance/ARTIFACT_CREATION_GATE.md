@@ -4,7 +4,7 @@
 
 See also: [`WORKSPACE_GATEKEEPER.md`](WORKSPACE_GATEKEEPER.md) — entry point and end-to-end flow.
 
-Use this before creating any new **agent, skill, script, repeated workflow, or template**. Default stance: *do not create unless the gate passes.*
+Use this before creating any new **persistent agent, skill, script, repeated workflow, or template**. Temporary worker delegation within an already authorized session does not create a persistent artifact. Default stance: *do not create unless the gate passes.*
 
 ## Why
 
@@ -52,8 +52,8 @@ Output: numeric score + decision. Save the gate transcript under `governance/dec
 
 When a "Create" decision is reached, add a row to the appropriate registry **before** writing the artifact:
 
-- Skills → [`../skills/SKILL_REGISTRY.md`](../skills/SKILL_REGISTRY.md)
-- Agents → [`../agents/AGENT_REGISTRY.md`](../agents/AGENT_REGISTRY.md)
+- Skills → [`registries/skills.md`](registries/skills.md)
+- Agents → [`registries/agents.md`](registries/agents.md)
 - Scripts → describe in [`../RULES.md`](../RULES.md) "Where to find things" or the relevant runbook
 
 ## Examples

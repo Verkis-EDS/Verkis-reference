@@ -3,8 +3,8 @@ from __future__ import annotations
 
 import argparse
 import re
-import shutil
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
 TEXT_EXTENSIONS = {
     ".md", ".txt", ".yml", ".yaml", ".json", ".toml", ".ini",
@@ -57,6 +57,20 @@ def sanitize_text(text: str) -> str:
     return text
 
 
+def public_links(path: Path, root: Path) -> str:
+    """Keep public links; label references to omitted internal files as prose."""
+    def replace(match):
+        label, target = match.groups()
+        url = urlsplit(target)
+        if url.scheme or url.netloc or not url.path:
+            return match.group(0)
+        resolved = (path.parent / unquote(url.path)).resolve()
+        if resolved.is_relative_to(root) and resolved.is_file():
+            return match.group(0)
+        return f"{label} (internal reference; omitted from this mirror)"
+    return re.sub(r"(?<!!)\[([^\]\n]+)\]\(([^\s)]+)\)", replace, path.read_text())
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--source", required=True)
@@ -67,17 +81,20 @@ def main() -> None:
     source = Path(args.source).expanduser().resolve()
     dest = Path(args.dest).expanduser().resolve()
 
-    if not source.exists():
+    if not source.is_dir():
         raise SystemExit(f"Source does not exist: {source}")
-
-    if dest.exists():
-        shutil.rmtree(dest)
+    if dest == source or dest in source.parents or source in dest.parents:
+        raise SystemExit("Source and destination must be separate trees")
+    if dest.exists() and (not dest.is_dir() or any(dest.iterdir())):
+        raise SystemExit("Destination must be absent or empty; refusing recursive deletion")
     dest.mkdir(parents=True, exist_ok=True)
 
     report = ["# Sanitization Report", ""]
     copied = blocked = skipped = 0
 
     for path in source.rglob("*"):
+        if path.is_symlink():
+            raise SystemExit("Symlink in source; refusing to read outside the allowlist")
         if path.is_dir():
             continue
 
@@ -93,7 +110,7 @@ def main() -> None:
             report.append(f"- SKIPPED non-text: `{rel}`")
             continue
 
-        clean = sanitize_text(path.read_text(encoding="utf-8", errors="replace"))
+        clean = sanitize_text(path.read_text(encoding="utf-8"))
 
         if args.strict and re.search(
             r"-----BEGIN [A-Z ]*PRIVATE KEY-----"
@@ -113,9 +130,16 @@ def main() -> None:
         copied += 1
         report.append(f"- COPIED sanitized: `{rel}`")
 
+    for path in dest.rglob("*.md"):
+        path.write_text(public_links(path, dest), encoding="utf-8")
     report += ["", "## Summary", "", f"- Copied: {copied}", f"- Blocked: {blocked}", f"- Skipped: {skipped}"]
     (dest / "SANITIZATION_REPORT.md").write_text("\n".join(report), encoding="utf-8")
     print(f"Sanitization complete. copied={copied} blocked={blocked} skipped={skipped}")
+    if args.strict and (blocked or skipped):
+        for item in report:
+            if item.startswith(("- BLOCKED", "- SKIPPED")):
+                print(item)
+        raise SystemExit("Incomplete strict export; review excluded inputs before publication")
 
 
 if __name__ == "__main__":

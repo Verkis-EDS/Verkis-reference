@@ -1,68 +1,40 @@
-# Model Routing Policy
+# Model routing policy
 
-> Copyright © Verkís internal documentation.
+> Copyright © Verkís internal documentation. Reviewed 2026-10-07.
 
-Which model handles which work. Default route: **`opusplan`** (Opus for planning, Sonnet for execution). Cost is informational only — never a justification to downgrade for planning, security, infrastructure, or final review.
+Choose capability for the consequence of a mistake, then minimize context and unnecessary work. Model availability comes from the active runtime. A model name in a document does not make that model callable.
 
-## Default route
+## Task routing
 
-`opusplan` — Opus owns the plan and the review; Sonnet does the routine execution under that plan. This matches [PLANNING_MODE.md](PLANNING_MODE.md) and [RULES.md](RULES.md) "Cost and model policy".
-
-## Routing table
-
-| Task class | Model | Rationale |
+| Work | Codex route verified for this workspace | Reasoning effort |
 |---|---|---|
-| Planning Mode session | `opusplan` or Opus | Plan quality dominates outcome; one bad plan costs more than every cheap reply combined |
-| Security review | Opus | Threat modelling, secret handling, attack-surface reasoning |
-| Infrastructure change (VM/LXC/network/storage) | Opus | Irreversibility risk; needs the strongest reasoning |
-| Destructive action (delete, rotate, force-push) | Opus | See [REDTEAM_REVIEW.md](REDTEAM_REVIEW.md) — Opus must produce the go/no-go |
-| Final review of a session | Opus | Last line of defence before closeout |
-| Routine coding / refactor under an approved plan | Sonnet | Execution under a frozen plan; quality bar met by Sonnet |
-| Markdown editing, doc cross-linking, format passes | Sonnet | Throughput task; deterministic |
-| Read-only audit script run / log inspection | Haiku | Cheap and fast; no mutation possible |
-| Quick syntax check / spelling pass | Haiku | Low risk, low stakes |
+| Recovery, storage, security, destructive changes, independent final review | GPT-6 Astra | High |
+| Complex GitLab, CI and maintenance implementation under an agreed plan | GPT-6.1 Sol | High |
+| Documentation, routine coding and scoped repository updates | GPT-6.1 Sol | Medium |
+| Bounded mechanical read-only checks after planning | GPT-6 Luna | High |
 
-Haiku is **never** used for: anything in Planning Mode, security, infrastructure, destructive actions, final review, gate decisions, or writing to memory.
+These assignments implement the approved October 2026 lab refresh. They are defaults for this workspace, not permanent provider guarantees. Recheck current model availability and official guidance before changing clients or models. Escalate unresolved ambiguity, failed verification and actions crossing a risk boundary. Do not use a lower tier to make storage, security, deletion or recovery decisions.
 
-## When to override
+For Claude Code, use the same task classes with the strongest available model for consequential decisions and a capable execution model for bounded implementation. Resolve the actual model and effort from the installed client's supported configuration and current official documentation. Historical Opus/Sonnet/Haiku and `opusplan` names in dated records describe those sessions; they are not cross-provider configuration values.
 
-Override the default upward (cheaper → more capable) when **any** of:
+## Delegation and context
 
-- The task crossed a gate boundary mid-session (e.g. read-only became mutating).
-- Verification turned up unexpected complexity.
-- The user explicitly asked for Opus on this step.
-
-Override downward (more capable → cheaper) only when **all** of:
-
-- The remaining work is purely mechanical execution under an already-approved plan.
-- No gate decision remains.
-- No destructive step is reachable from here.
-
-Cost pressure alone is never sufficient.
-
-## Sub-agents
-
-A sub-agent inherits the parent's risk class. A planning parent on Opus may dispatch Sonnet sub-agents for parallel read-only research, but the parent retains the decision and the final review. See [AGENT_OPERATING_STANDARD.md](AGENT_OPERATING_STANDARD.md) "Sub-agent and orchestration rules".
+- The coordinator owns scope, integration and the final result. Give workers disjoint files or services and clear acceptance criteria.
+- During this refresh, use at most three workers alongside the coordinator. Parallelize independent inspection and editing; serialize storage changes, credential transitions and publication.
+- Send the goal, relevant paths, observed facts, constraints and expected output. Avoid copying the complete conversation into every worker.
+- Use deterministic tools for counts, comparisons, syntax and link checks. Do not ask a model to re-read material whose verified summary is sufficient.
+- Routine session delegation is not creation of a durable agent artifact. Persistent agents, skills and scripts still follow the artifact gate and canonical registries.
+- Preserve decisions, changed files, verification evidence, pending work and authorization in handoffs. Do not treat compacted history as a reason to restart completed work.
 
 ## Token and cost reporting
 
-- Report tokens-in, tokens-out, and cost when the runtime exposes them.
-- If any field is missing, render the literal string `unknown`. **Never** estimate, interpolate, or invent.
-- Cost reporting is diagnostic. It informs the next session's routing choice; it does not override the routing table above.
-- Same rule lives in [CONTEXT_DISCIPLINE.md](CONTEXT_DISCIPLINE.md) "Token/cost reporting" — those two files must stay aligned.
+Report measured input/output tokens and cost only when exposed by the runtime. Otherwise use the literal `unknown`. Never estimate or invent accounting. Saving tokens must not weaken recovery or review requirements.
 
-## Reporting format
+## Sources and maintenance
 
-```text
-Model: <opus|sonnet|haiku>  Route: <opusplan|direct>
-Tokens in: <int|unknown>   Tokens out: <int|unknown>
-Cost (USD): <float|unknown>
-```
+- [OpenAI model selection](https://learn.chatgpt.com/docs/model-selection)
+- [OpenAI best practices](https://learn.chatgpt.com/guides/best-practices)
+- [Claude Code best practices](https://code.claude.com/docs/en/best-practices)
+- [Claude model configuration](https://code.claude.com/docs/en/model-config)
 
-## Anti-patterns
-
-- "Downgrading to Haiku to save tokens on this destructive step." — refuse.
-- "Estimating tokens at ~3k because the runtime didn't say." — render `unknown`.
-- "Opus is overkill for this rename." — fine, if the rename is mechanical, under an approved plan, and reversible. Otherwise, stay on Opus.
-
-See also: [`RUNBOOK_MASTER_v4.md`](RUNBOOK_MASTER_v4.md) cost section.
+Checked 2026-10-07. Review quarterly and after a material client/model change. Owner: Lab maintainers. See [context discipline](CONTEXT_DISCIPLINE.md) and [agent operating standard](AGENT_OPERATING_STANDARD.md).
