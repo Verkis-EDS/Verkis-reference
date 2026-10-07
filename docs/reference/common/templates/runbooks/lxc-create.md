@@ -1,34 +1,28 @@
-> Source-of-truth: `verkis-lab/proxmox-manager:/runbooks/lxc-create.md` on host `3HS`. NAS copy synced 2026-05-28.
+# Template: create an LXC
 
-# Runbook: Create a Container (LXC)
+Owner/date/target: complete before execution. This generic template defers lab allocation to the canonical manuals access table and LXC guide.
 
-## Preconditions
-- Confirm: CTID, hostname, template, storage, bridge, IP mode, resources.
-- Use official/trusted templates: `pveam update && pveam available` → `pveam download local <template>`.
-- Prefer **unprivileged** containers; avoid nesting unless required.
+## Prerequisites
 
-## Default baseline
-| Setting | Default |
-|---|---|
-| Unprivileged | yes |
-| Cores | 1–2 |
-| RAM | 1–2 GiB |
-| Disk | 8–16 GiB on `local-lvm` |
-| NIC | `vmbr0` |
-| Features | minimal |
-| Firewall | enabled where practical |
+Authorized free CTID/static address, trusted exact template filename, available storage/bridge, resources and public SSH key. Inspect `pct list`, existing configs and storage. Prefer unprivileged containers; enable nesting only for a reviewed requirement. No DHCP or internal DNS is assumed.
 
-## Steps (example)
+## Steps
+
+Substitute actual approved values; use one exact verified template, not a wildcard:
+
 ```bash
-CTID=200; STORAGE=local-lvm; BRIDGE=vmbr0
-pct create "$CTID" local:vztmpl/<template>.tar.zst \
-  --hostname ct-example --unprivileged 1 \
-  --cores 2 --memory 2048 --rootfs ${STORAGE}:8 \
-  --net0 name=eth0,bridge=${BRIDGE},ip=dhcp \
-  --ssh-public-keys /path/to/key.pub
-pct start "$CTID"
+pct create "$NEW_CTID" "$EXACT_TEMPLATE" \
+  --hostname "$HOSTNAME" --unprivileged 1 \
+  --cores "$CORES" --memory "$MEMORY_MIB" --rootfs "$STORAGE:$DISK_GIB" \
+  --net0 "name=eth0,bridge=$BRIDGE,ip=$STATIC_CIDR,gw=$GATEWAY" \
+  --ssh-public-keys "$PUBLIC_KEY_FILE"
+pct start "$NEW_CTID"
 ```
 
-## Verify
-- `pct status $CTID` = running; `pct exec $CTID -- ip a` ok; DNS + package manager work.
-- Record the container in `inventory/containers.md`.
+## Verification
+
+Check status, console, address/route, expected storage mounts and trusted SSH/service health. Separately document excluded data mounts and their backup path. Record actual results and update inventory.
+
+## Rollback and troubleshooting
+
+Stop only the new container while inspecting template/storage/address/permission issues. Preserve data; destruction or overwriting an existing CT is a separate exact-target action. Capture owner/date, expected results and failed/unavailable checks.

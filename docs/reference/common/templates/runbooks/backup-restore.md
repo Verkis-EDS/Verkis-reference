@@ -1,31 +1,23 @@
-> Source-of-truth: `verkis-lab/proxmox-manager:/runbooks/backup-restore.md` on host `3HS`. NAS copy synced 2026-05-28.
+# Template: backup and isolated restore
 
-# Runbook: Backup & Restore
+Owner/date/target: complete before execution. This generic template is not the current lab retention configuration. The lab's canonical implementation/runbook is proxmox-manager `runbooks/verified-backup-retention.md`; the manuals backup overview records current evidence.
 
-> A backup is not valid until a **restore has been tested**.
+## Prerequisites and plan
 
-## Plan
-- What: which VMs/LXCs. Where: storage/PBS/offsite. Frequency, retention, encryption, monitoring.
-- Single-disk host → an **offsite/PBS target is essential** (local backups die with the disk).
+Identify guests, application/configuration layers, excluded mounts, selected archive/destination, freshness and failure domains. Preserve at least the workflow's required verified holders and headroom. Independent storage is a separate hardware decision; copying on one host does not become off-host protection.
 
-## Configure a scheduled backup (vzdump)
-- GUI: Datacenter → Backup → Add. Or `/etc/pve/jobs.cfg`.
-- Example one-off:
-  ```bash
-  vzdump <VMID> --storage local --mode snapshot --compress zstd
-  ```
-- Prefer Proxmox Backup Server (PBS) for incremental + encrypted + dedup; add it as storage, then target it in the job.
+## Steps
 
-## Restore
-```bash
-# list
-ls /var/lib/vz/dump/                 # or: proxmox-backup-client snapshot list
-# VM restore (new VMID to avoid clobber)
-qmrestore /var/lib/vz/dump/<file>.vma.zst <NEW_VMID> --storage local-lvm
-# LXC restore
-pct restore <NEW_CTID> /var/lib/vz/dump/<file>.tar.zst --storage local-lvm
-```
+1. Inspect the installed backup job/catalog without changing it.
+2. Validate the intended archive's complete decompression and VMA/tar structure, recording results separately from restoration.
+3. Select a confirmed free disposable restore ID and enough target capacity. Keep networking disconnected **before first boot** to avoid IP/service collisions.
+4. Follow the platform/version-matched restore procedure for the exact archive and target, then verify boot and service health inside the isolated environment. Restore excluded NAS mounts/application exports separately.
+5. Record actual checks, limitations and cleanup. Do not prune by filename age or use native retention that can remove unknown/unverified holders.
 
-## Verify
-- Restored guest boots, networks, and serves; then document the restore test date.
-- **Never print backup encryption keys / repo passwords.** Store them in a secrets manager.
+## Verification
+
+Report integrity, freshness, retained-copy count, guest boot, application behavior, excluded-data recovery and failure-domain coverage independently. A valid archive is not a proved application recovery. Preserve secrets/private archives outside Git/shared plaintext.
+
+## Rollback and troubleshooting
+
+Leave production unchanged; stop the disposable clone if checks fail. Retain backup holders and resolve target capacity, format/version, mounts and application consistency before retry. Destroy only an identified disposable guest after the current evidence is captured and the scope authorizes it.

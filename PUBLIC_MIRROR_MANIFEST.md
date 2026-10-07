@@ -1,6 +1,6 @@
 # Public Mirror Manifest
 
-Source revision: ced39fd5b45f5d45963b676be2ff572fa27eca62
+Source revision: bb83884f0f8934bddfcdee2da8a16e6c66b6d96c
 
 Export procedure reviewed: 2026-10-07
 

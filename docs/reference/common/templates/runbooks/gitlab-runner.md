@@ -1,59 +1,25 @@
-> Source-of-truth: `verkis-lab/proxmox-manager:/runbooks/gitlab-runner.md` on host `3HS`. NAS copy synced 2026-05-28.
+# Template: select or replace a GitLab runner
 
-# Runbook: GitLab Runner (`gitlab-runner01`)
+Owner/date/version/target: complete before execution. Reuse an existing correctly scoped runner whenever possible. The current lab runner/deployment facts are maintained in the manuals GitLab/CI guide, not copied into this generic setup template.
 
-CI runner registered against `https://gitlab.verkis.internal`. Docker executor, default image
-`python:3.12-slim`, tags `docker,python`, `run_untagged=true`. Lives on VM **102** (`192.168.x.x`).
+## Prerequisites
 
-## Re-create / replace
+Authorized GitLab maintainer/admin access with verified TLS, selected supported executor and signed/version-reviewed installation source, capacity, required tags, secret storage and rollback configuration. Never register by sending credentials through `curl -k` or by printing a token.
 
-```bash
-# 1) Install Docker + gitlab-runner on the VM (Ubuntu 24.04)
-sudo apt-get update && sudo apt-get install -y ca-certificates curl
-sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc >/dev/null
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo $VERSION_CODENAME) stable" | sudo tee /etc/apt/sources.list.d/docker.list
-curl -fsSL https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
-sudo apt-get update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin gitlab-runner
+## Steps
 
-# 2) Trust the self-signed cert proxy01 uses for gitlab.verkis.internal
-sudo mkdir -p /etc/gitlab-runner/certs
-sudo scp root@192.168.x.x:/etc/nginx/ssl/gitlab.verkis.internal.crt \
-  /etc/gitlab-runner/certs/gitlab.verkis.internal.crt
-sudo chmod 644 /etc/gitlab-runner/certs/gitlab.verkis.internal.crt
+1. Inspect the existing runner's status, tags, project scope, protection and executor. A queued job may simply be waiting for a matching slot.
+2. If replacement is necessary, install the reviewed package through its supported repository/version procedure; do not blindly execute a downloaded shell installer.
+3. Obtain the public GitLab certificate through a trusted management path and configure runner TLS trust before registration. Keep authentication material outside Git, docs and logs.
+4. Create/register the selected runner using the installed version's supported GitLab UI/instructions. Ordinary jobs use appropriate explicit tags. Deployment uses a project-locked protected runner and production-scoped credentials.
+5. Use unprivileged ephemeral containers, pull current pinned images, and do not expose the host Docker socket to jobs. Set source/project access deliberately.
 
-# 3) Create the runner in GitLab (admin) and get the auth token
-#    GUI: Admin Area → CI/CD → Runners → New instance runner
-#    Or API (admin PAT, scope=api):
-#    curl -sk --resolve gitlab.verkis.internal:443:192.168.x.x \
-#         -H "PRIVATE-TOKEN=<REDACTED>" \
-#         -X POST https://gitlab.verkis.internal/api/v4/user/runners \
-#         --data runner_type=instance_type \
-#         --data-urlencode description=gitlab-runner01 \
-#         --data-urlencode tag_list=docker,python \
-#         --data run_untagged=true --data locked=false
-#    → returns token starting with glrt-...
+## Verification
 
-# 4) Register
-sudo gitlab-runner register --non-interactive \
-  --url https://gitlab.verkis.internal --token glrt-... \
-  --executor docker --docker-image python:3.12-slim --docker-pull-policy if-not-present \
-  --description gitlab-runner01
+Check runner online status and a real project pipeline with matching tags/protection. Verify protected secrets are unavailable to unprotected branches and deployment is gated by successful validation. A runner listing alone does not prove execution.
 
-# 5) Verify
-sudo gitlab-runner list
-sudo gitlab-runner verify
-```
+## Rollback and troubleshooting
 
-In GitLab: **Admin Area → CI/CD → Runners** — the runner appears as online.
-Config (with token) is at `/etc/gitlab-runner/config.toml`; back this up if mirroring elsewhere.
+Keep the previous runner/configuration until the replacement pipeline succeeds. Disable/revoke only the newly introduced runner if it fails; never export the old config/token into a shared artifact. Check queue, tags, protection, TLS and executor reachability before restart or resource changes.
 
-## Test pipeline
-Add to any project's `.gitlab-ci.yml`:
-```yaml
-hello:
-  image: python:3.12-slim
-  script:
-    - python -c "print('runner ok')"
-```
-Push → pipeline picks up on `gitlab-runner01`.
+Official version-matched references: [runner registration](https://docs.gitlab.com/runner/register/), [self-signed certificate trust](https://docs.gitlab.com/runner/configuration/tls-self-signed/), [Docker executor](https://docs.gitlab.com/runner/executors/docker/).

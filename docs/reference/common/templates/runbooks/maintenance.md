@@ -1,30 +1,19 @@
-> Source-of-truth: `verkis-lab/proxmox-manager:/runbooks/maintenance.md` on host `3HS`. NAS copy synced 2026-05-28.
+# Template: bounded maintenance
 
-# Runbook: Maintenance & Updates
+Owner/date/target/version: complete before execution. This generic format does not declare a live host's repositories, upgrades or reboot state.
 
-## APT repositories (current state on `3HS`)
-- Enterprise repos **disabled** (no subscription → 401). Using `pve-no-subscription`.
-- Files: `/etc/apt/sources.list.d/{pve-enterprise,ceph}.sources` carry `Enabled: false`;
-  `pve-no-subscription.sources` is active.
-- Re-enable enterprise (if a subscription is purchased): set `Enabled: true` and remove the no-subscription file.
+## Prerequisites
 
-## Update procedure
-```bash
-apt-get update
-apt-get -s dist-upgrade        # review what changes (simulation)
-# confirm backups first, then in a maintenance window:
-apt-get dist-upgrade
-```
-- Check whether a reboot is needed (new kernel/microcode): `[ -f /var/run/reboot-required ] && echo reboot needed`.
-- Reboot only with approval and a console/rollback path.
+Observed installed version, official upgrade guidance, trusted package sources, verified backup/recovery, console access, interruption window and a specific rollback plan. Do not start a major upgrade from a copied old command sequence.
 
-## Verify after updates
-```bash
-pveversion -v
-systemctl --failed
-journalctl -p err -n 100 --no-pager
-```
+## Steps
 
-## Routine health check
-Run `scripts/readonly-audit.sh` and compare against the latest `audits/` snapshot.
-Never run blind major version upgrades — read the official upgrade guide first.
+Inspect repositories and available updates; simulate the reviewed upgrade where supported. Apply only the authorized selected change after its recovery prerequisites pass. A reboot requires the agreed window/access; package installation alone does not prove the new kernel is running.
+
+## Verification
+
+Check actual version, failed services, critical application health, connectivity and backup scheduling. Record package/kernel difference and pending reboot honestly.
+
+## Rollback and troubleshooting
+
+Use the preserved prior package/configuration or tested recovery route. Do not blindly downgrade packages, rotate keys or remove repositories to hide an error. Capture the actual symptom and read-only diagnosis before corrective writes.

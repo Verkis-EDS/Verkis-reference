@@ -38,7 +38,9 @@ nav:
       - Workspace Gatekeeper: standards/workspace-gatekeeper.md
       - Front-End & HMI Design Workflow: standards/design-workflow.md
       - Dashboard & HMI Data Pack: standards/dashboard-hmi-data-pack.md
+  - Workspace Setup: reference/common/WORKSPACE_SETUP.md
   - Templates:
+      - Reuse Catalog: reference/common/templates/README.md
       - New Project Start: project-templates/new-project-start-template.md
   - Reference:
       - Personality: reference/personality.md

@@ -1,26 +1,19 @@
-> Source-of-truth: `verkis-lab/proxmox-manager:/runbooks/ssh-repair.md` on host `3HS`. NAS copy synced 2026-05-28.
+# Template: repair SSH access
 
-# Runbook: SSH Access Repair
+Owner/date/target: complete before execution. Keep an existing trusted session/console throughout the change.
 
-## Identify
-- Target host/VM/LXC, username, expected public key, current access path (console available?).
+## Prerequisites and inspection
 
-## Inspect (read-only first)
-```bash
-getent passwd USER
-ls -ld ~USER ~USER/.ssh; ls -l ~USER/.ssh/authorized_keys
-sshd -T | grep -Ei 'permitrootlogin|passwordauthentication|pubkeyauthentication|allowusers|denyusers'
-systemctl status ssh; journalctl -u ssh -n 50 --no-pager
-```
+Identify the account, approved public key, trust record and access path. Inspect account existence, `.ssh` ownership/permissions and effective sshd policy. Do not dump private keys or complete sensitive logs into shared artifacts.
 
-## Fix (back up before editing)
-- **Never blindly overwrite** `authorized_keys` — append, don't replace.
-- Backup config: `cp -a /etc/ssh/sshd_config /etc/ssh/sshd_config.$(date +%F).bak`.
-- Fix perms: `chmod 700 ~USER/.ssh; chmod 600 ~USER/.ssh/authorized_keys; chown -R USER: ~USER/.ssh`.
-- After editing sshd_config: `sshd -t` (syntax) → `systemctl reload ssh` (reload, not restart, when remote).
+## Steps
 
-## Verify
-```bash
-ssh -vvv -o BatchMode=yes USER@HOST true
-```
-- Keep an existing session open until the new path is confirmed. Note firewall/fail2ban if relevant.
+Preserve the current authorized keys/configuration privately. Add only the reviewed public key without overwriting existing authorized keys. Correct only the identified owner/permissions. Check `sshd -t` before an approved reload; never use a blind daemon restart as the first diagnostic action.
+
+## Verification
+
+Open a second SSH connection with `BatchMode=yes` and `StrictHostKeyChecking=yes`. Confirm the intended identity and operation before closing the old session. A new host key requires independent verification, not disabling host-key checks.
+
+## Rollback and troubleshooting
+
+Restore the preserved configuration or remove only the newly added key through the retained session/console. Inspect effective policy, permissions, listener, firewall and account restrictions. Keep actual results and owner/date with the completed runbook.

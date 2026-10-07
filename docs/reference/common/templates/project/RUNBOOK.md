@@ -1,40 +1,31 @@
-# RUNBOOK — `<project-slug>`
+# Runbook — <project-slug>
 
-> Copyright © Verkís internal documentation. Operational procedures for this project. Mirrors the
-> structure used across `_common/templates/runbooks/`.
+## Owner and applicability
 
-## Start
-```bash
-# how to start the service / app
-```
+State the project, version, target and operator. Mark this draft until actual execution evidence exists.
 
-## Stop
-```bash
-# how to stop cleanly
-```
+## Prerequisites
 
-## Restart
-```bash
-# how to restart (prefer reload over restart where supported)
-```
+Identify access/trust, scope, exact source/target, required tools and preserved backup. Consult authoritative shared references instead of copying lab topology.
 
-## Logs
-```bash
-# where the logs live and how to tail them
-```
+## Start, stop and deployment
 
-## Backup
-```bash
-# what to back up, where it goes, retention
-```
+Add only verified project-specific commands, their expected results and interruption limits. Do not run placeholders against a live service.
 
-## Restore
-```bash
-# how to restore from the last good backup; remember §0 of master runbook —
-# a backup is not valid until a restore has been tested
-```
+## Verification
+
+Record actual build/tests and runtime health separately. Include failed/unavailable checks and a dated evidence location.
+
+## Backup and recovery
+
+Distinguish archive integrity, freshness, retained copies and service restoration. Test an isolated restore before claiming recovery; keep secrets/private backups outside Git and shared NAS plaintext.
+
+## Rollback
+
+State the tested previous version/configuration, exact bounded action and post-rollback checks. Keep the current access session until replacement access works.
 
 ## Troubleshooting
-| Symptom | Likely cause | First check | Fix |
+
+| Symptom | Read-only diagnosis | Bounded corrective action | Owner |
 |---|---|---|---|
-| `<observable>` | `<hypothesis>` | `<read-only command>` | `<action>` |
+| To be completed | To be verified | Requires applicable authorization | To be assigned |

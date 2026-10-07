@@ -38,6 +38,7 @@ if [ -d "$NAS_COMMON" ]; then
 
   for f in \
     RULES.md \
+    WORKSPACE_SETUP.md \
     PLANNING_MODE.md \
     AGENT_OPERATING_STANDARD.md \
     MODEL_ROUTING_POLICY.md \

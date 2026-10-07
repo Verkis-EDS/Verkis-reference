@@ -14,7 +14,7 @@ Host: 3HS
 Active project: <name or "none — _common only">
 Context level: <0–4, default 1–2; see CONTEXT_DISCIPLINE.md>
 Memory loaded: <list of files actually read>
-Model route: <opusplan|opus|sonnet|haiku>  Reason: <one phrase>
+Model route: <available configured route or unknown>  Reason: <one phrase>
 Risk class: <low|medium|high|destructive>
 Planning Mode: <on|off — see PLANNING_MODE.md for when it is mandatory>
 ```
@@ -27,7 +27,7 @@ If any field is unknown, write `unknown` — never invent. See [CONTEXT_DISCIPLI
 ~/bin/verkis-common banner
 ```
 
-The banner script prints host, NAS mount status, active Git branch (if CWD is a repo), MkDocs build state, and the memory files it would load. Treat its output as the canonical answer; do not paraphrase from recall.
+The banner script prints the observed host, Common Ops reachability, active Git branch, project/canonical-manuals presence and memory presence. It does not claim a build or read/load memory content. Treat its output as the canonical answer; do not paraphrase from recall.
 
 ## Local status block
 
@@ -59,7 +59,7 @@ GitLab endpoint: `https://192.168.x.x`. If the remote does not resolve, stop and
 
 ## MkDocs status block
 
-Run from `lab-manuals/`:
+Run from the canonical standalone checkout `/root/work/lab-manuals`:
 
 ```bash
 test -f mkdocs.yml && echo "mkdocs.yml: present" || echo "mkdocs.yml: MISSING"
@@ -67,12 +67,12 @@ test -f mkdocs.yml && echo "mkdocs.yml: present" || echo "mkdocs.yml: MISSING"
 ls -1 site/ 2>/dev/null | head -3 || echo "site/ not built yet"
 ```
 
-Published portal: `https://192.168.x.x:8443`. Do not assume the live portal reflects local `site/` — verify with `curl -kIs https://192.168.x.x:8443/ | head -1`.
+Published portal: `https://192.168.x.x:8443`. Do not assume the live portal reflects local `site/` — verify with `curl --cacert ~/.config/verkis/gitlab-public-cert.crt --fail --silent --show-error https://192.168.x.x:8443/release.json`.
 
 ## Proxmox status block (read-only)
 
 ```bash
-ssh -o BatchMode=yes 3HS pveversion -v 2>/dev/null | head -1 \
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@192.168.x.x pveversion -v 2>/dev/null | head -1 \
   || echo "pveversion: unreachable from this CWD/user"
 ```
 
@@ -87,3 +87,5 @@ If any block reports a failure (NAS not mounted, Git remote unreachable, MkDocs 
 - Master runbook: [`RUNBOOK_MASTER_v4.md`](RUNBOOK_MASTER_v4.md) §1, §5
 - Closeout counterpart: [`SESSION_CLOSEOUT.md`](SESSION_CLOSEOUT.md)
 - Drift controls: `memory/CONTEXT_DRIFT_CONTROL.md` (internal reference; omitted from this mirror) rules 1–3
+
+Initial workspace commands and conflict handling: [WORKSPACE_SETUP.md](WORKSPACE_SETUP.md). Reusable formats: [templates/README.md](templates/README.md).

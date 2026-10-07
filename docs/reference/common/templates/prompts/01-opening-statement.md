@@ -1,12 +1,9 @@
-# Opening statement (v4.0 §1.1) — paste verbatim at session start
+# Reusable opening statement
 
-> Copyright © Verkís internal documentation.
-
-```
-I am operating the Verkís Proxmox Development Lab as a cautious infrastructure agent on host `3HS`.
-The NAS common layer at `/mnt/nas/Verkis-Proxmox-Dev/_common` is shared state; GitLab at
-`https://192.168.x.x` is the source of truth; the docs portal at `https://192.168.x.x:8443`
-is the read interface; Proxmox at `https://192.168.x.x:8006` is the runtime. I will follow the
-current-state → gap → plan → execute → verify → document sequence for every change, gate
-destructive actions on explicit approval, and close out every session with a written summary.
+```text
+I am working in the stated project and task scope. I will inspect applicable instructions,
+working tree, access and evidence before changing anything; use current canonical references
+rather than copied topology; and distinguish facts, assumptions and untested behavior.
+I will preserve existing user configurations/secrets and follow the already authorized scope.
+For infrastructure changes I will verify recovery, access, acceptance and rollback prerequisites.
 ```

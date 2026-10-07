@@ -1,35 +1,27 @@
-> Source-of-truth: `verkis-lab/proxmox-manager:/runbooks/vm-create.md` on host `3HS`. NAS copy synced 2026-05-28.
+# Template: create a VM
 
-# Runbook: Create a VM (QEMU/KVM)
+Owner/date/target: complete before execution. This generic template is not a VM allocation or proof of success. Use the canonical manuals VM guide and access table for the actual lab plan.
 
-## Preconditions
-- Confirm: VMID (free), name, OS/ISO or cloud-init image, cores, RAM, disk size, storage, bridge, VLAN, IP mode, SSH user + keys.
-- Check for conflicts: `qm list`, `pvesh get /cluster/nextid`.
-- Prefer a cloud-init template for Linux.
+## Prerequisites
 
-## Default baseline (override as needed)
-| Setting | Default |
-|---|---|
-| Cores | 2 |
-| RAM | 4 GiB |
-| Disk | 32 GiB on `local-lvm` |
-| NIC | virtio on `vmbr0` |
-| Guest agent | enabled |
-| Cloud-init | enabled (Linux) |
-| Auth | SSH key only; password auth disabled |
-| Firewall | default-deny inbound except required |
+Authorized target/VMID, current capacity, reviewed source image/template, selected storage/bridge, static IP/gateway and trusted SSH key. Inspect `qm list`, the proposed VMID, storage and guest network configuration. A suggested next ID does not prove an IP is free. No internal DNS or DHCP is assumed.
 
-## Steps (example, cloud-init)
+## Steps
+
+Prepare exact approved values, then adapt the target platform's version-matched VM creation procedure. Cloud-init example after the new VM exists:
+
 ```bash
-VMID=9000; STORAGE=local-lvm; BRIDGE=vmbr0
-# (template creation / import image steps depend on chosen image)
-qm set "$VMID" --ciuser USER --sshkeys /path/to/key.pub
-qm set "$VMID" --ipconfig0 ip=dhcp        # or ip=CIDR,gw=GW
-qm set "$VMID" --agent enabled=1
-qm start "$VMID"
+# Set these to observed and approved values; never use a live template VMID.
+qm set "$NEW_VMID" --ciuser "$SSH_USER" --sshkeys "$PUBLIC_KEY_FILE"
+qm set "$NEW_VMID" --ipconfig0 "ip=$STATIC_CIDR,gw=$GATEWAY"
+qm set "$NEW_VMID" --agent enabled=1
+qm start "$NEW_VMID"
 ```
 
-## Verify
-- `qm status $VMID` = running; console boots; `qm agent $VMID ping` ok.
-- Network reachable; `ssh USER@IP` works; firewall state known.
-- Record the VM in `inventory/vms.md`.
+## Verification
+
+Confirm boot, expected resources, static network and trusted SSH. Guest-agent checks succeed only if that agent is installed/running. Record actual results and update the canonical inventory; do not declare an unperformed restore or application test successful.
+
+## Rollback and troubleshooting
+
+Stop only the newly created VM if validation fails. Preserve source image/backups; review any deletion separately. Diagnose source compatibility, storage headroom, console, bridge/address conflict and key trust before retrying. Keep command evidence and owner/date with the completed runbook.

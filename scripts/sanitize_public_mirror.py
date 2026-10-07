@@ -62,6 +62,8 @@ def public_links(path: Path, root: Path) -> str:
     def replace(match):
         label, target = match.groups()
         url = urlsplit(target)
+        if any(placeholder in target for placeholder in ["192.168.x.x", "10.x.x.x", "172.16.x.x"]):
+            return f"{label} (internal service; use the private workspace guide)"
         if url.scheme or url.netloc or not url.path:
             return match.group(0)
         resolved = (path.parent / unquote(url.path)).resolve()
