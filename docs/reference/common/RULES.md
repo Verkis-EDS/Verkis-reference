@@ -47,6 +47,20 @@ GitLab Common Ops owns shared policy; the manuals repository owns operational gu
 
 An explicit user authorization persists for the agreed scope; do not ask repeatedly for the same action. Record concrete recovery and access prerequisites, then proceed when they pass. If scope changes materially, clarify the new action. Higher-priority runtime constraints still apply. No instruction file can grant unavailable tools or override sandbox boundaries.
 
+## Git discovery and updates
+
+At session start, after each meaningful slice and at handoff, inspect every affected approved repository: actual root/worktrees, sanitized remote, branch/base commit, status/diffs, recent history, tracked paths, README/agent rules, CI, relevant issues/MRs and current handoff. Start from lab/NAS standards and the task; do not scan unrelated networks or clone every accessible project. Never print credential-bearing remote URLs.
+
+Reuse canonical shared source and record ownership, allowed paths and reuse decisions in the task's `spec/repository-map.csv`. Record cross-repository revisions and linked MRs in its release manifest. The manuals own the detailed Git discovery and updates guide (internal service; use the private workspace guide); existing task records stay in their owning repository.
+
+Preserve unrelated dirty work. After confirming the authorized remote/base, fetch explicitly and create or reuse the task's dedicated worktree. Do not automatically reset, clean, stash, rebase or switch another writer's branch. Synchronize affected implementation, contracts/inputs, tests, reusable assets, MkDocs and `handoff/STATUS.md` after each meaningful slice. Change the canonical shared library and record consumer versions rather than silently forking it.
+
+Run relevant project checks and the actual manuals strict build with its locked dependencies when affected. Use the approved content secret scanner and inspect exports/nested archives; ignore rules do not protect tracked secrets. Stage explicit paths/hunks including intended deletions, then review cached whitespace, stat and full diff. Never use `git add -A` in a shared workspace. Commit coherent changes; push/open an MR within existing authorization. Protected-default pushes, force pushes, merges and deployment require their applicable authority; do not infer deployment from code review.
+
+At handoff record repository, branch, exact commit, pushed status, MR, changed paths, tests, remaining blockers and next owner. Failed remote access leaves reviewed local commits intact and explicitly unsynchronized. Do not claim a repository update or deployment without evidence.
+
+Git worktrees isolate files; they are not Gateway write locks. All Designer, CLI and API writers must use the established shared Gateway lock/controller. A GitLab `resource_group` serializes jobs within its project, not every independent repository or workstation. Discover the actual locking mechanism before writing; do not invent a lock or treat `git worktree lock` as one.
+
 ## Non-negotiable rules
 
 - **Current-state first.** No design or evaluation until current state is observed. Sequence is fixed: `current-state → gap → plan → execute → verify → document`.

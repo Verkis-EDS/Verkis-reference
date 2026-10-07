@@ -59,21 +59,26 @@ Complete ownership, use-case scope, actual test commands and recovery in the sca
 
 ## Integrate into GitLab safely
 
-Use an existing authorized starter kit or create/initialize the GitLab project through its supported UI/API. Clone its real default branch with verified trust; create a focused setup branch and bring only reviewed scaffold files into that clone. Do not force-push unrelated scaffold history or push directly to protected main.
+Use an existing authorized starter kit or create/initialize the GitLab project through its supported UI/API. Clone its real default branch with verified trust; confirm the default branch and create a dedicated setup worktree, then bring only reviewed scaffold files into it. Reuse an existing task worktree rather than creating or resetting it again. Do not force-push unrelated scaffold history or push directly to protected main.
 
 ```bash
-git status --short
-git fetch origin
-git switch -c setup/initial-workspace origin/main
+git status --short --branch
+git worktree list
+# Confirm origin/main and that these new task names/paths are available first.
+git fetch origin main
+git worktree add -b setup/initial-workspace ../project-initial-workspace origin/main
+cd ../project-initial-workspace
 # Copy only the selected reviewed files; define project-specific CI/tests.
 git diff --check
 git add path/to/reviewed/file
+git diff --cached --check
 git diff --cached --stat
+git diff --cached
 git commit -m "Initialize reviewed project workspace"
 git push -u origin setup/initial-workspace
 ```
 
-Replace the example staged path with actual reviewed files. CI must match the implementation, use appropriate runner tags, pin the required runtime/dependencies and avoid secrets in logs/artifacts. Protected main requires a successful pipeline and resolved discussions; skipped CI is not a validation result. Manuals deploy through their protected immutable-artifact pipeline, not working-tree rsync.
+Replace the example base, worktree and staged path with confirmed task values. Complete `spec/repository-map.csv` and `handoff/STATUS.md`, record cross-repository release pins, and run the approved content secret scanner before committing. These new stubs are evidence records, not approvals. CI must match the implementation, use appropriate runner tags, pin the required runtime/dependencies and avoid secrets in logs/artifacts. Protected main requires a successful pipeline and resolved discussions; skipped CI is not a validation result. Manuals deploy through their protected immutable-artifact pipeline, not working-tree rsync.
 
 ## Verification, rollback and troubleshooting
 

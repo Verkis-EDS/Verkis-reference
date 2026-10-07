@@ -8,7 +8,7 @@ from urllib.parse import unquote, urlsplit
 
 TEXT_EXTENSIONS = {
     ".md", ".txt", ".yml", ".yaml", ".json", ".toml", ".ini",
-    ".sh", ".py", ".js", ".ts", ".css", ".html", ".example",
+    ".sh", ".py", ".js", ".ts", ".css", ".html", ".example", ".csv",
 }
 
 BLOCKED_NAME_PATTERNS = [

@@ -1,3 +1,5 @@
 # Project entrypoint
 
-Read AGENTS.md, README.md and the applicable task scope before work. Shared provider guidance and skill/tool choices live in the AI Practice Hub; operating policy and reusable setup templates live in Common Ops. Preserve existing configurations and verify actual behavior.
+@AGENTS.md
+
+Read README.md and the current handoff/task scope. The shared rules above are canonical for both agents; do not maintain a second policy here. Provider guidance lives in the AI Practice Hub, and operating policy/templates live in Common Ops.
